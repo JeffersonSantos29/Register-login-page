@@ -1,1 +1,16 @@
-<p>primary-input works!</p>
+
+<div class="input-wrapper">
+  <label for="forName">{{label}}</label>
+  <div class="input-content">
+    <input
+    [type] ="type"
+    [formControlName] ="formName"
+    [placeholder] = "placeholder"
+    />
+    <div class="icon">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
+
+
