@@ -1,9 +1,17 @@
 import { Component } from '@angular/core';
 import { DefaultLoginLayoutComponent } from '../../components/default-login-layout/default-login-layout.component';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup,ReactiveFormsModule, Validators } from '@angular/forms';
 import { PrimaryInputComponent } from '../../components/primary-input/primary-input.component';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
+import { ToastrService } from 'ngx-toastr';
+
+
+
+interface LoginForm {
+  email: FormControl,
+  password: FormControl
+}
 
 @Component({
   selector: 'app-login',
@@ -23,7 +31,8 @@ export class LoginComponent {
 
     constructor(
       private router: Router,
-      private loginService: LoginService
+      private loginService: LoginService,
+      private toastService: ToastrService
     ){
       this.loginForm = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),
@@ -32,8 +41,8 @@ export class LoginComponent {
   }
   submit(){
       this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
-        next: () => console.log("Success"),
-        error: () => console.log("Error")
+        next: () => this.toastService.success("Login Feito com sucesso!"),
+        error: () => this.toastService.error("Erro inesperado!")
       })
   }
   navigate(){
